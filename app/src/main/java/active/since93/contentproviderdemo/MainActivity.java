@@ -19,6 +19,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import active.since93.contentproviderdemo.adapter.ContactListAdapter;
+import active.since93.contentproviderdemo.model.ContactItems;
+
 /**
  * Created by darshan.parikh on 24-Sep-15.
  */
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     while (pCur.moveToNext()) {
                         phoneNo += pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)) + (pCur.isLast() ? "" : "\n");
                     }
-                    contactItemsList.add(new ContactItems(name, phoneNo));
+                    contactItemsList.add(new ContactItems(id, name, phoneNo));
                     pCur.close();
                 }
             }
