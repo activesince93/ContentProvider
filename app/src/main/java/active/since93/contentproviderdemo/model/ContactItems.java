@@ -1,5 +1,7 @@
 package active.since93.contentproviderdemo.model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by darshan.parikh on 24-Sep-15.
  */
@@ -7,11 +9,13 @@ public class ContactItems {
     String id;
     String name;
     String number;
+    Bitmap image;
 
-    public ContactItems(String id, String name, String number) {
+    public ContactItems(String id, String name, String number, Bitmap image) {
         this.id = id;
         this.name = name;
         this.number = number;
+        this.image = image;
     }
 
     public String getId() {
@@ -36,5 +40,13 @@ public class ContactItems {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

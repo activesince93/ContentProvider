@@ -2,11 +2,11 @@ package active.since93.contentproviderdemo.adapter;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.OperationApplicationException;
+import android.graphics.Bitmap;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.RawContacts;
@@ -15,11 +15,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import active.since93.contentproviderdemo.AddContactActivity;
 import active.since93.contentproviderdemo.R;
 import active.since93.contentproviderdemo.model.ContactItems;
 
@@ -48,6 +51,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         ContactItems contactItems = contactItemsList.get(position);
         holder.name.setText(contactItems.getName());
         holder.number.setText(contactItems.getNumber());
+        holder.contactImage.setImageBitmap(contactItems.getImage());
         holder.id = contactItems.getId();
     }
 
@@ -60,22 +64,27 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         TextView name;
         TextView number;
         String id;
+        ImageView contactImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.txtName);
             this.number = (TextView) itemView.findViewById(R.id.txtNumber);
+            this.contactImage = (ImageView) itemView.findViewById(R.id.contactImage);
             itemView.setOnLongClickListener(this);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            showDialog(getPosition(), number.getText().toString(), name.getText().toString(), id);
+            contactImage.setDrawingCacheEnabled(false);
+            contactImage.setDrawingCacheEnabled(true);
+            Bitmap bitmap = contactImage.getDrawingCache();
+            showDialog(getPosition(), number.getText().toString(), name.getText().toString(), id, bitmap);
             return false;
         }
     }
 
-    void showDialog(final int position, final String number, final String name, final String id) {
+    void showDialog(final int position, final String number, final String name, final String id, final Bitmap bitmap) {
         String[] menuItems = {"Update", "Delete"};
         AlertDialog.Builder adb = new AlertDialog.Builder(context);
         adb.setTitle("Select action");
@@ -83,10 +92,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    Intent intent = new Intent(Intent.ACTION_EDIT);
+                    Intent intent = new Intent(context, AddContactActivity.class);
+                    intent.putExtra("image", bitmap/*getByteArray(bitmap)*/);
+                    intent.putExtra("name", name);
+                    intent.putExtra("id", id);
+                    intent.putExtra("number", number);
+                    context.startActivity(intent);
+                    /*Intent intent = new Intent(Intent.ACTION_EDIT);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setData(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(id)));
-                    context.startActivity(intent);
+                    context.startActivity(intent);*/
                 } else {
                     showWarningDialog(position, number, id);
                 }
@@ -108,7 +123,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 }).show();
     }
@@ -132,25 +146,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             e.printStackTrace();
         }
     }
-    /*private long getContactID(ContentResolver contactHelper,String number) {
-        Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        String[] projection = { PhoneLookup._ID };
-        Cursor cursor = null;
-        try {
-            cursor = contactHelper.query(contactUri, projection, null, null, null);
-            if (cursor.moveToFirst()) {
-                int personID = cursor.getColumnIndex(PhoneLookup._ID);
-                return cursor.getLong(personID);
-            }
-            return -1;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-                cursor = null;
-            }
-        }
-        return -1;
-    }*/
+    byte[] getByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
 }
