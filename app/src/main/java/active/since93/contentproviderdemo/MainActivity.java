@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         contactItemsList = new ArrayList<ContactItems>();
 
         new AsyncTaskGetContacts().execute();
-//        displayList();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.left_slide_in, R.anim.left_slide_out);
             }
         });
     }
@@ -122,15 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return contactItemsList;
-    }
-
-
-    // Method to display contact list
-    void displayList() {
-        contactItemsList = displayContacts();
-        Collections.sort(contactItemsList, new CustomComparator());
-        contactListAdapter = new ContactListAdapter(MainActivity.this, contactItemsList);
-        contactListRecyclerView.setAdapter(contactListAdapter);
     }
 
     // Sort contacts in alphabetical order
