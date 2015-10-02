@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +24,7 @@ import java.util.List;
 
 import active.since93.contentproviderdemo.AddContactActivity;
 import active.since93.contentproviderdemo.R;
+import active.since93.contentproviderdemo.imageview.CircleImageView;
 import active.since93.contentproviderdemo.model.ContactItems;
 
 /**
@@ -65,13 +65,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         TextView name;
         TextView number;
         String id;
-        ImageView contactImage;
+        CircleImageView contactImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.txtName);
             this.number = (TextView) itemView.findViewById(R.id.txtNumber);
-            this.contactImage = (ImageView) itemView.findViewById(R.id.contactImage);
+            this.contactImage = (CircleImageView) itemView.findViewById(R.id.contactImage);
             itemView.setOnLongClickListener(this);
         }
 

@@ -11,9 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import active.since93.contentproviderdemo.imageview.CircleImageView;
 
 /**
  * Created by darshan.parikh on 24-Sep-15.
@@ -23,7 +24,7 @@ public class AddContactActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextNumber;
     private Button addContactBtn;
-    private ImageView contactImage;
+    private CircleImageView contactImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class AddContactActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.edtTxtName);
         editTextNumber = (EditText) findViewById(R.id.edtTxtNumber);
         addContactBtn = (Button) findViewById(R.id.addContactBtn);
-        contactImage = (ImageView) findViewById(R.id.contactImage);
+        contactImage = (CircleImageView) findViewById(R.id.contactImage);
 
         final String nameStr = getIntent().getStringExtra("name");
         final String numberStr = getIntent().getStringExtra("number");

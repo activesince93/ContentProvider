@@ -8,12 +8,11 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <ImageView
+    <active.since93.contentproviderdemo.imageview.CircleImageView
         android:id="@+id/contactImage"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="5dp"
-        android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:src="@android:drawable/ic_menu_myplaces" />
 
