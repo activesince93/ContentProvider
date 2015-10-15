@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.left_slide_in, R.anim.left_slide_out);
             }
         });
     }
@@ -81,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if(id == R.id.action_refresh) {
+            new AsyncTaskGetContacts().execute();
         }
 
         return super.onOptionsItemSelected(item);

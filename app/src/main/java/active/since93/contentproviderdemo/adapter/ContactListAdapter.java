@@ -1,6 +1,5 @@
 package active.since93.contentproviderdemo.adapter;
 
-import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -99,7 +98,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     intent.putExtra("id", id);
                     intent.putExtra("number", number);
                     context.startActivity(intent);
-                    ((Activity)context).overridePendingTransition(R.anim.left_slide_in, R.anim.left_slide_out);
                 } else {
                     showWarningDialog(position, number, id);
                 }
