@@ -142,6 +142,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             e.printStackTrace();
         }
     }
+
     byte[] getByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
